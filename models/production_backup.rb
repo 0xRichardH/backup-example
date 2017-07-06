@@ -9,6 +9,9 @@
 # For more information about Backup's components, see the documentation at:
 # http://backup.github.io/backup
 #
+
+require_relative '../settings'
+
 Model.new(:production_backup, 'Description for production_backup') do
   split_into_chunks_of 250
   compress_with Gzip
@@ -18,11 +21,11 @@ Model.new(:production_backup, 'Description for production_backup') do
   #
   database MySQL do |db|
     # To dump all databases, set `db.name = :all` (or leave blank)
-    db.name               = "DATABASE_NAME"
-    db.username           = "DATABASE_USERNAME"
-    db.password           = "DATABASE_PASSWORD"
-    db.host               = "localhost"
-    db.port               = 3306
+    db.name               = Settings.database.name
+    db.username           = Settings.database.username
+    db.password           = Settings.database.password
+    db.host               = Settings.database.host
+    db.port               = Settings.database.port
     db.additional_options = ["--quick", "--single-transaction"]
   end
 
